@@ -1,37 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Blynk LED Control</title>
-  <style>
-    body { font-family: Arial; text-align: center; margin-top: 50px; }
-    button { padding: 15px 30px; font-size: 20px; margin: 10px; cursor: pointer; }
-    .on { background-color: #4CAF50; color: white; }
-    .off { background-color: #f44336; color: white; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flybrick_S60r</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="manifest" href="assets/site.webmanifest">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
-<body>
-  <h1>ESP32 LED Control via Blynk</h1>
-  <button class="on" onclick="toggleLED(1)">ON</button>
-  <button class="off" onclick="toggleLED(0)">OFF</button>
-  <h2 id="status">LED status: unknown</h2>
+<body class="theme-dark">
 
-  <script>
-    const authToken = "b2PSVZ5hMiKwnHrsWzHcKL-caGKt_E6P"; // Your Blynk Auth Token
+  <header class="profile">
+    <img oncontextmenu="return false" draggable="false" src="assets/logo.png" alt="Flybrick Logo">
+    <h1>Flybrick_S60r</h1>
+    <p>YouTuber • Gamer • Creator</p>
+  </header>
 
-    function toggleLED(value) {
-      fetch(`https://blynk.cloud/external/api/update?token=${authToken}&pin=V0&value=${value}`)
-        .then(response => response.text())
-        .then(() => updateStatus());
+
+  <section class="card video-card">
+    <div class="video-header">
+      <h2>Latest Video</h2>
+      <span id="newBadge" class="badge" hidden>NEW</span>
+      <span id="liveBadge" class="badge live" hidden>LIVE</span>
+    </div>
+
+    <div class="video-wrapper">
+      <img id="videoThumb" class="thumbnail" hidden>
+      <iframe id="latestVideo" loading="lazy" allowfullscreen></iframe>
+    </div>
+
+    <h3 id="videoTitle"></h3>
+    <p id="videoMeta"></p>
+    <p id="videoFallback" hidden>No long video available.</p>
+  </section>
+
+  <section draggable="false" loading="lazy" class="card"><section class="links" draggable="false"></section></section>
+  
+
+
+  <section class="card">
+    <h2>Latest Shorts</h2>
+    <div id="shortsGrid" class="shorts-grid"></div>
+  </section>
+
+  <footer>
+    <p>© 2025 Flybrick_S60r</p>
+  </footer>
+
+  <script src="js/firebase-init.js"></script>
+  <script src="js/public-links.js"></script>
+  <script src="js/youtube.js"></script>
+
+
+<script>
+const linksContainer = document.querySelector(".links");
+
+firebase.database().ref("links").on("value", snapshot => {
+  const data = snapshot.val();
+  linksContainer.innerHTML = "";
+
+  if (!data) return;
+
+  Object.values(data).forEach(link => {
+    const a = document.createElement("a");
+    a.href = link.url || "#" ;
+    a.target = "_blank";
+    a.className = "link-card";
+
+    const content = document.createElement("div");
+    content.className = "link-content";
+
+    if (link.icon && link.icon.trim() !== "") {
+      const iconText = link.icon.trim();
+
+ 
+      const img = document.createElement("img");
+      img.src = iconText;
+      img.alt = link.name || "";
+      img.className = "link-icon";
+
+      img.onerror = () => {
+        img.remove(); 
+        const spanIcon = document.createElement("span");
+        spanIcon.textContent = iconText;
+        spanIcon.className = "link-emoji";
+        content.prepend(spanIcon);
+      };
+
+      content.appendChild(img);
     }
 
-    function updateStatus() {
-      fetch(`https://blynk.cloud/external/api/get?token=${authToken}&pin=V0`)
-        .then(response => response.text())
-        .then(text => document.getElementById("status").innerHTML = "LED status: " + (text=="1" ? "ON" : "OFF"));
-    }
+    const span = document.createElement("span");
+    span.textContent = link.name || "Link";
+    content.appendChild(span);
 
-    setInterval(updateStatus, 2000); // Refresh every 2 seconds
-    updateStatus();
-  </script>
+    a.appendChild(content);
+    linksContainer.appendChild(a);
+  });
+});
+
+
+
+</script>
+
+
 </body>
 </html>
