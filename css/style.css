@@ -13,6 +13,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding: 1rem;
+    transition: all 0.3s ease;
 }
 
 .profile {
@@ -23,7 +24,7 @@ body {
 .profile img {
     width: 120px;
     border-radius: 50%;
-    border: 3px solid rgba(255, 255, 255, 0.08);
+    border: 3px solid var(--profile);
 }
 
 .profile h1 {
@@ -162,6 +163,7 @@ iframe.loaded {
     transform: scale(1.1);
 }
 
+
 .short img {
     width: 100%;
     height: 200px;
@@ -187,18 +189,33 @@ footer {
     color: rgba(255, 255, 255, 0.6);
     margin: 0 8px;
     font-size: 1.5rem;
-    transition: color 0.2s;
     border-radius: 50%;
     transition: all 0.3s ease;
 }
 
-.socisal i {
+.social i {
     transition: all 0.3s ease;
+    color: var(--social);
+    animation: Slide 0.3 both;
+    animation-timeline: view();
+    animation-range: entry 1% cover 2%;
+    overflow: hidden;
+}
+
+@keyframes socialhover {
+    from {
+        transform: scale(1);
+        transition: all 0.3s ease;
+    }
+
+    to {
+        transform: scale(1.2);
+        transition: all 0.3s ease;
+    }
 }
 
 .social i:hover {
-    transform: scale(1.2);
-    transition: all 0.3s ease;
+    animation: socialhover 0.3s forwards;
 }
 
 .link-card,
@@ -343,11 +360,104 @@ footer {
     transform: translateY(-2px);
 }
 
-.sponsor-card::after {
-    content: "Sponsored";
-    margin-left: auto;
-    font-size: 0.7rem;
-    opacity: 0.7;
-    padding-left: 10px;
-    white-space: nowrap;
+.sponsor-card:nth-child(odd),
+.link-card:nth-child(odd) {
+    animation: fadeRight both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 50%;
+    overflow: hidden;
+}
+
+.sponsor-card:nth-child(2n),
+.link-card:nth-child(2n) {
+    animation: fadeLeft both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 40%;
+    overflow: hidden;
+}
+
+@keyframes fadeLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-700px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeRight {
+    from {
+        opacity: 0;
+
+    }
+
+    to {
+        opacity: 1;
+
+    }
+}
+
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    font-family: sans-serif;
+}
+
+.custom-select-btn {
+    width: 100px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    color: var(--text);
+    border-radius: 4px;
+    background: var(--bg);
+    text-align: left;
+}
+
+.custom-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.custom-select-wrapper.open .custom-options {
+    max-height: 200px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.custom-options li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.custom-options li:hover {
+    background: var(--hover);
+}
+
+.arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.custom-select-wrapper.open .arrow {
+    transform: rotate(180deg);
 }

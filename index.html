@@ -10,6 +10,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
   <link rel="manifest" href="assets/site.webmanifest">
+  <link rel="stylesheet" href="css/themes.css">
   <script src="https://kit.fontawesome.com/ecbdcf2a50.js" crossorigin="anonymous"></script>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -17,6 +18,19 @@
 </head>
 
 <body class="theme-dark">
+
+<div class="custom-select-wrapper">
+  <button class="custom-select-btn" aria-label="Select Theme">
+    Dark <span class="arrow">▼</span>
+  </button>
+  <ul class="custom-options">
+    <li data-value="theme-light">Light</li>
+    <li data-value="theme-dark">Dark</li>
+    <li data-value="theme-neon">Neon</li>
+  </ul>
+</div>
+
+
 
   <header class="profile">
     <img oncontextmenu="return false" draggable="false" src="assets/logo.png" alt="Flybrick Logo">
@@ -59,15 +73,16 @@
     <a target="_blank" class="social" draggable="false" href="https://www.youtube.com/@Flybrick_S60R"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i></a>
     <a target="_blank" class="social" draggable="false" href="https://www.instagram.com/flybrick_s60r"><i class="fa-brands fa-instagram" style="color: #ff0088;"></i></a>
     <a target="_blank" class="social" draggable="false" href="https://www.twitch.tv/flybrick_s60r"><i class="fa-brands fa-twitch" style="color: #B197FC;"></i></a>
-    <a target="_blank" class="social" draggable="false" href="https://www.tiktok.com/@flybrick_s60r?ug_source=op.auth&ug_term=Linktr.ee&utm_source=awyc6vc625ejxp86&utm_campaign=tt4d_profile_link&_r=1"><i class="fa-brands fa-tiktok" style="color: #ffffff;"></i></a>
+    <a target="_blank" class="social" draggable="false" href="https://www.tiktok.com/@flybrick_s60r?ug_source=op.auth&ug_term=Linktr.ee&utm_source=awyc6vc625ejxp86&utm_campaign=tt4d_profile_link&_r=1"><i class="fa-brands fa-tiktok"></i></a>
     <a target="_blank" class="social" draggable="false" href="https://www.facebook.com/profile.php?id=100093144267320"><i class="fa-brands fa-facebook" style="color: #0400ff;"></i></a>
     <a target="_blank" class="social" draggable="false" href="https://discord.com/invite/MfTswQaw5E"><i class="fa-brands fa-discord" style="color: #B197FC;"></i></a>
     <a target="_blank" class="social" draggable="false" href="https://github.com/FlybrickS60R/Volvo-Cluster"><i class="fa-brands fa-github"></i></a>
   </footer>
 
-<script src="js/firebase-init.js"></script>
-<script src="js/public-links.js"></script>
-<script src="js/youtube.js"></script>
+  <script src="js/firebase-init.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/public-links.js"></script>
+  <script src="js/youtube.js"></script>
 
 <script>
 
